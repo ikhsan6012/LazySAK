@@ -45,7 +45,7 @@ with requests.Session() as s:
     url = BASE_URL + 'login/validate/'
     data = { 'token': token, 'nip': nip, 'password': password }
     res = s.post(url, data=data)
-    if 'refresh' in res.headers.keys():
+    if 'refresh' in res.headers.keys() or res.url == BASE_URL + 'home':
       print('Login Berhasil!')
       return
     print('Login Gagal. NIP atau Password Salah!')
@@ -56,11 +56,11 @@ with requests.Session() as s:
     data = getData(token)
     res = s.post(BASE_URL + 'SelfAssessmentKesehatan/add', data=data)
     if 'refresh' in res.headers.keys():
-      print('Gagal Menyimpan SAK!')
-    else:
       print('Berhasil Menyimpan SAK!')
       print('zzzzzzzzzzzzzzzzzzzzz Selamat Tidur Lagi zzzzzzzzzzzzzzzzzzzzz')
-      sys.exit()
+    else:
+      print('Gagal Menyimpan SAK!')
+    sys.exit()
 
   if __name__ == '__main__':
     def is_number(s):
